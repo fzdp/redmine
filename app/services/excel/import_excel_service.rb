@@ -24,7 +24,7 @@ class Excel::ImportExcelService < ApplicationService
     create_import_log
 
     begin
-      @_handler = handler_service.___send__(:new, user_id: options[:user_id], project_id: options[:project_id], log_id: @log.id)
+      @_handler = handler_service.__send__(:new, user_id: options[:user_id], project_id: options[:project_id], log_id: @log.id)
       first_row = true
 
       SimpleXlsxReader.open(options[:file_path]).sheets.first.rows.each.with_index do |cells, i|

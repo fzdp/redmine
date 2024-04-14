@@ -1,0 +1,27 @@
+<p>上传Excel</p>
+
+<input type="file" name="excelFile" id="file-input">
+
+<script>
+    $("#file-input").on("change", function () {
+      console.log("====== file changed ===========");
+      let formData = new FormData();
+      formData.append("file", $("#file-input")[0].files[0]);
+      formData.append("import_type", "issue");
+      formData.append("project_id", 1);
+      formData.append("max_row", 3000);
+      $.ajax({
+        url: "/file_imports/import_excel",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+          console.log(res)
+        },
+        error: function (res) {
+          console.error(res);
+        }
+      })
+    })
+</script>

@@ -417,4 +417,12 @@ Rails.application.routes.draw do
     puts "An error occurred while loading the routes definition of #{plugin_name} plugin (#{plugin_routes_path}): #{e.message}."
     exit 1
   end
+
+  resources :file_imports, only: [] do
+    collection do
+      post :import_excel
+      get :job_status
+      get :demo
+    end
+  end
 end

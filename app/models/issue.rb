@@ -2062,7 +2062,7 @@ class Issue < ApplicationRecord
   end
 
   def send_notification
-    if notify? && Setting.notified_events.include?('issue_added')
+    if notify? && Setting.notified_events.include?('issue_added') && self.file_import_log_id.blank?
       Mailer.deliver_issue_add(self)
     end
   end
