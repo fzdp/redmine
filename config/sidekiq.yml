@@ -1,0 +1,9 @@
+# Sample configuration file for Sidekiq.
+# Options here can still be overridden by cmd line args.
+#   sidekiq -C config.yml
+---
+:concurrency: 20
+:pidfile: tmp/pids/sidekiq.pid
+:queues:
+  - [file_import, 6]
+  - [default, 4]
