@@ -8,14 +8,14 @@ module Api
         self.class.success_res(data: data)
       end
 
-      def error_res(message: 'something is wrong')
-        self.class.error_res(message: message)
+      def error_res(message: 'something is wrong', data: nil)
+        self.class.error_res(message: message, data: data)
       end
     end
 
     class_methods do
-      def error_res(message: 'something is wrong')
-        Res.new(message, nil, false)
+      def error_res(message: 'something is wrong', data: nil)
+        Res.new(message, data, false)
       end
 
       def success_res(data: nil)

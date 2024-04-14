@@ -1,7 +1,7 @@
 class FileImportLog < ApplicationRecord
   enum import_type: { issue: 0 }
   enum file_type: { xlsx: 0 }
-  enum job_status: { created: 0, processing: 2, done: 1, exit: 3 }
+  enum job_status: { created: 0, processing: 2, done: 1, exit: 3, fail_rows_error: 4 }
 
   serialize :headers
 
@@ -17,6 +17,10 @@ class FileImportLog < ApplicationRecord
     $redis.with {|c| c.incr(KEY_FAIL_COUNT % self.id)}
   end
 
+  def cached_process_count
+    $redis.with {|c| c.get(KEY_PROCESS_COUNT % self.id)&.to_i}
+  end
+
   def cache_processing
     set_cached_job_status FileImportLog::job_statuses[:processing]
   end
@@ -27,6 +31,10 @@ class FileImportLog < ApplicationRecord
 
   def cache_done
     set_cached_job_status FileImportLog::job_statuses[:done]
+  end
+
+  def cache_fail_rows_error
+    set_cached_job_status FileImportLog::job_statuses[:fail_rows_error]
   end
 
   def cached_job_status
