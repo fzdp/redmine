@@ -1,6 +1,6 @@
 class FileImportJob
   include Sidekiq::Job
-  sidekiq_options queue: 'file_import'
+  queue_as :file_import
 
   def perform(opts)
     options = opts.symbolize_keys
